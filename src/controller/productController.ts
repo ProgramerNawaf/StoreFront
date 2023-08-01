@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { Product, ProductStore } from "../models/product";
+import jwt from "jsonwebtoken";
 
 const store = new ProductStore();
 const getProduct = async (
@@ -31,7 +32,11 @@ const postProduct = async (
     name: req.body.name,
     price: req.body.price,
   };
-
+  try{
+    jwt.verify(req.body.token ,process.env.TOKEN_SECRET as jwt.Secret)}
+  catch(err){
+    throw new Error("no token provided")}
+  
   try {
     console.log("gg1");
     const newProduct = await store.create(product);

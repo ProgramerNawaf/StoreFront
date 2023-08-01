@@ -4,3 +4,9 @@
     price VARCHAR(150)
 
 );
+CREATE TABLE myuser (
+    id SERIAL PRIMARY  KEY,
+    username VARCHAR(150),
+    password VARCHAR(150)
+
+);
