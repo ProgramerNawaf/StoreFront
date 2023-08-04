@@ -1,23 +1,24 @@
-import bcrypt from "bcrypt";
-import client from "../database";
+import bcrypt from 'bcrypt';
+import client from '../database';
 
 const pepper: string = process.env.BCRYPT_PW as string;
 const saltRounds: number = parseInt(process.env.SALT_ROUNDS as string);
 
 export type Users = {
+  id?: number;
   username: string;
   password: string;
-
+  role: string;
 };
 
 export class UsersStore {
   show(arg0: string) {
-    throw new Error("Method not implemented.");
+    throw new Error('Method not implemented.');
   }
   async index(): Promise<Users[]> {
     try {
       const conn = await client.connect();
-      const sql = "SELECT * FROM users;";
+      const sql = 'SELECT * FROM users;';
 
       const result = await conn.query(sql);
 
@@ -27,53 +28,86 @@ export class UsersStore {
       throw new Error(err.message);
     }
   }
+
   async create(u: Users): Promise<void> {
     try {
-      console.log("gg2");
-      const hash = bcrypt.hashSync(
-        u.password + pepper, 
-        saltRounds
-     );
+      console.log('gg2');
+      const hash = bcrypt.hashSync(u.password + pepper, saltRounds);
       const con = await client.connect();
-      console.log("gg3");
+      console.log('gg3');
       const sql =
-        "INSERT INTO users (username, password) VALUES($1, $2) RETURNING *";
-      const result = await con.query(sql, [u.username, hash]);
+        'INSERT INTO users (username, password,role) VALUES($1, $2,$3) RETURNING *';
+      const result = await con.query(sql, [u.username, hash, u.role]);
       const user = result.rows[0];
-      con.release();
-      return user;
+      if (u.role == 'CUSTOMER') {
+        const sql =
+          'INSERT INTO customer (customer_id ,balance) VALUES($1, $2) RETURNING *';
+        console.log('ddd');
+        const result = await con.query(sql, [user.id, 0]);
+        const customer = result.rows[0];
+        con.release();
+        return customer;
+      } else {
+        const sql =
+          'INSERT INTO merchant (merchant_id ,revenue) VALUES($1, $2) RETURNING *';
+        const result = await con.query(sql, [user.id, 0]);
+        const merchant = result.rows[0];
+        con.release();
+        return merchant;
+      }
     } catch (err) {
       throw new Error(err.message);
     }
   }
   async delete(id: string): Promise<void> {
     const conn = await client.connect();
-    const sql = "DELETE FROM users WHERE id=($1)";
+    const sql = 'DELETE FROM users WHERE id=($1)';
     const result = await conn.query(sql, [id]);
   }
   async upadte(id: string): Promise<void> {
     const conn = await client.connect();
-    const sql = "UPDATE FROM users WHERE id=($1)";
+    const sql = 'UPDATE FROM users WHERE id=($1)';
     const result = await conn.query(sql, [id]);
   }
 
   async authenticate(loginUser: Users): Promise<Users | null> {
-    try{
-        const conn = await client.connect();
-        const sql = `SELECT * FROM users WHERE username = $1`;
+    try {
+      const conn = await client.connect();
+      const sql = `SELECT * FROM users WHERE username = $1`;
 
-        const result = await conn.query(sql,[loginUser.username]);
-        if(result.rows.length > 0){
-            const user = result.rows[0];
+      const result = await conn.query(sql, [loginUser.username]);
+      if (result.rows.length > 0) {
+        const user = result.rows[0];
 
-            if(bcrypt.compareSync(loginUser.password + pepper, user.password)){
-                return user;
-            }
+        if (bcrypt.compareSync(loginUser.password + pepper, user.password)) {
+          return user;
         }
-        return null;
-    }catch(err){
-        throw new Error(`Could not get users. Error: ${err}`)
+      }
+      return null;
+    } catch (err) {
+      throw new Error(`Could not get users. Error: ${err}`);
     }
-}
-}
+  }
 
+  async addBalance(customerId: Number, balance: Number): Promise<void | null> {
+    try {
+      const conn = await client.connect();
+      const sql = `SELECT * FROM customer WHERE customer_id = $1`;
+
+      const result = await conn.query(sql, [customerId]);
+      console.log('hey');
+      if (result.rows.length > 0) {
+        const customer = result.rows[0];
+        const newBalance = customer.balance + balance;
+        const sql = 'UPDATE customer SET balance =$1 WHERE customer_id = $2';
+        const result1 = await conn.query(sql, [newBalance, customerId]);
+        conn.release();
+        return newBalance;
+      }
+      conn.release();
+      return null;
+    } catch (err) {
+      throw new Error(`Could not get users. Error: ${err}`);
+    }
+  }
+}
