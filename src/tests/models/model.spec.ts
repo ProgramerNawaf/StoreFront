@@ -1,25 +1,23 @@
 import { Product, ProductStore } from '../../models/product';
-
 const store = new ProductStore();
 
-describe('Product Model', () => {
+describe('Product Store Model', () => {
   it('should have an index method', () => {
     expect(store.index).toBeDefined();
   });
 
-  it('should have a show method', () => {
-    expect(store.index).toBeDefined();
+  it('index method should return a list of products', async () => {
+    const result = await store.index();
+    expect(result).toHaveSize;
   });
 
-  it('should have a create method', () => {
-    expect(store.index).toBeDefined();
-  });
-
-  it('should have a update method', () => {
-    expect(store.index).toBeDefined();
-  });
-
-  it('should have a delete method', () => {
-    expect(store.index).toBeDefined();
-  });
+  // it('create proudct : 5999.99 computer', async () => {
+  //     const product: Product= {
+  //         name:'Computer',
+  //         price: 5999.99,
+  //         category: 2
+  //     }
+  //     const createQuery = await store.create(product);
+  //     expect(createQuery.name).toEqual("Computer");
+  //     expect(createQuery.price).toEqual(5999.99);
 });

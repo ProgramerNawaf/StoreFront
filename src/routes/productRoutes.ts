@@ -5,8 +5,6 @@ import {
   deleteProduct,
   updateProduct,
   getProductById,
-  createOrder,
-  checkoutOrder,
 } from '../controller/productController';
 import verifyAuthToken from '../middleware/verifyAuth';
 
@@ -20,17 +18,5 @@ router.post('/post/:merchant_id', verifyAuthToken, postProduct);
 router.delete('/delete/:id', verifyAuthToken, deleteProduct);
 
 router.put('/update/:id', verifyAuthToken, updateProduct);
-
-router.post(
-  '/createOrder/:customer_id/:product_id',
-  verifyAuthToken,
-  createOrder,
-);
-
-router.post(
-  '/checkoutOrder/:customer_id/:order_id',
-  verifyAuthToken,
-  checkoutOrder,
-);
 
 export default router;

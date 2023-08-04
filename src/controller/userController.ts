@@ -16,6 +16,11 @@ const getCustomrs = async (_req: Request, res: Response) => {
 
   res.json(customer);
 };
+const getCustomrById = async (_req: Request, res: Response) => {
+  const customer = await customerStore.show(_req.params.id);
+
+  res.json(customer);
+};
 const getUserById = async (_req: Request, res: Response) => {
   const id = _req.params.id;
   const user = await store.show(id);
@@ -56,4 +61,11 @@ const addBalance = async (
   }
 };
 
-export { getUsers, getUserById, createUser, addBalance, getCustomrs };
+export {
+  getUsers,
+  getUserById,
+  createUser,
+  addBalance,
+  getCustomrs,
+  getCustomrById,
+};

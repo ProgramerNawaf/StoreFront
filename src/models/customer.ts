@@ -22,4 +22,17 @@ export class CustomerStore {
       throw new Error(err.message);
     }
   }
+  async getbyId(id: string): Promise<Customer> {
+    try {
+      const conn = await client.connect();
+      const sql = 'SELECT * FROM customer WHERE id = $1';
+
+      const result = await conn.query(sql, [id]);
+      conn.release();
+
+      return result.rows[0];
+    } catch (err) {
+      throw new Error(`Could not get customer. Error: ${err}`);
+    }
+  }
 }
