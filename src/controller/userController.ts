@@ -27,6 +27,12 @@ const getUserById = async (_req: Request, res: Response) => {
   res.json(user);
 };
 
+const deleteUser = async (_req: Request, res: Response) => {
+  const id = _req.params.id;
+  const user = await store.delete(id);
+  res.json(user);
+};
+
 const createUser = async (_req: Request, res: Response) => {
   const user: any = {
     username: _req.body.username,
@@ -68,4 +74,5 @@ export {
   addBalance,
   getCustomrs,
   getCustomrById,
+  deleteUser,
 };

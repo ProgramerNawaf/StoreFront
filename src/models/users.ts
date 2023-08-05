@@ -61,8 +61,19 @@ export class UsersStore {
   }
   async delete(id: string): Promise<void> {
     const conn = await client.connect();
-    const sql = 'DELETE FROM users WHERE id=($1)';
-    const result = await conn.query(sql, [id]);
+    let sql = 'SELECT * FROM users WHERE id=($1)';
+    let result = await conn.query(sql, [id]);
+    const user = result.rows[0];
+    if (user.role == 'CUSTOMER') {
+      sql = 'DELETE FROM customer WHERE customer_id=($1)';
+      result = await conn.query(sql, [id]);
+    } else {
+      sql = 'DELETE FROM merchant WHERE merchant_id=($1)';
+      result = await conn.query(sql, [id]);
+    }
+
+    sql = 'DELETE FROM users WHERE id=($1)';
+    result = await conn.query(sql, [id]);
   }
   async upadte(id: string): Promise<void> {
     const conn = await client.connect();
