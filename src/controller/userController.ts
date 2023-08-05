@@ -1,26 +1,15 @@
 import express, { Request, Response } from 'express';
 import { Users, UsersStore } from '../models/users';
 import jwt from 'jsonwebtoken';
-import { CustomerStore, Customer } from '../models/customer';
 
 const store = new UsersStore();
-const customerStore = new CustomerStore();
 
 const getUsers = async (_req: Request, res: Response) => {
   const users = await store.index();
 
   res.json(users);
 };
-const getCustomrs = async (_req: Request, res: Response) => {
-  const customer = await customerStore.index();
 
-  res.json(customer);
-};
-const getCustomrById = async (_req: Request, res: Response) => {
-  const customer = await customerStore.show(_req.params.id);
-
-  res.json(customer);
-};
 const getUserById = async (_req: Request, res: Response) => {
   const id = _req.params.id;
   const user = await store.show(id);
@@ -67,12 +56,4 @@ const addBalance = async (
   }
 };
 
-export {
-  getUsers,
-  getUserById,
-  createUser,
-  addBalance,
-  getCustomrs,
-  getCustomrById,
-  deleteUser,
-};
+export { getUsers, getUserById, createUser, addBalance, deleteUser };
