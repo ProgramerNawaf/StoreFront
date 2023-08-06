@@ -2,6 +2,21 @@ import { Order_Products, Order_Products_Store } from '../models/order_products';
 import { Request, Response } from 'express';
 const store = new Order_Products_Store();
 
+const getOrderByCustomer = async (
+  _req: Request,
+  res: Response,
+): Promise<Response | void> => {
+  const customer_id: Number = parseInt(_req.params.customer_id);
+
+  try {
+    const order = await store.getOrderByCustomer(customer_id);
+
+    return res.status(200).send(order);
+  } catch (err) {
+    res.status(404);
+  }
+};
+
 const createOrder = async (
   _req: Request,
   res: Response,
@@ -37,4 +52,4 @@ const checkoutOrder = async (
   }
 };
 
-export { createOrder, checkoutOrder };
+export { createOrder, checkoutOrder, getOrderByCustomer };

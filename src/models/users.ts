@@ -12,8 +12,18 @@ export type Users = {
 };
 
 export class UsersStore {
-  show(arg0: string) {
-    throw new Error('Method not implemented.');
+  async show(id: string): Promise<Users> {
+    try {
+      const conn = await client.connect();
+      const sql = 'SELECT * FROM users WHERE id = $1';
+
+      const result = await conn.query(sql, [id]);
+      conn.release();
+
+      return result.rows[0];
+    } catch (err) {
+      throw new Error(`Could not get users. Error: ${err}`);
+    }
   }
   async index(): Promise<Users[]> {
     try {
@@ -29,7 +39,7 @@ export class UsersStore {
     }
   }
 
-  async create(u: Users): Promise<void> {
+  async create(u: Users): Promise<Users> {
     try {
       console.log('gg2');
       const hash = bcrypt.hashSync(u.password + pepper, saltRounds);

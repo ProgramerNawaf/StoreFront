@@ -8,6 +8,19 @@ export type Order_Products = {
   customer_id: Number;
 };
 export class Order_Products_Store {
+  async getOrderByCustomer(customer_id: Number): Promise<Order_Products[]> {
+    try {
+      const conn = await client.connect();
+      const sql = 'SELECT * FROM order_products WHERE customer_id = $1';
+
+      const result = await conn.query(sql, [customer_id]);
+      conn.release();
+
+      return result.rows[0];
+    } catch (err) {
+      throw new Error(`Could not get customer. Error: ${err}`);
+    }
+  }
   async createOrder(
     customer_id: Number,
     productsId: Number,
