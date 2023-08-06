@@ -59,7 +59,8 @@ describe('testing all the routes endpoint', () => {
 
   it('should create product Orange', async () => {
     const response = await request
-      .post('/products/post/' + 1)
+      .post('/products/post/1')
+      .auth(token, { type: 'bearer' })
       .send(Orange)
       .expect(200);
     expect(response.body.name).toBe('Orange');

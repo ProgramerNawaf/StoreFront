@@ -18,21 +18,7 @@ CREATE TABLE merchant (
     PRIMARY KEY (merchant_id)
 );
 
-CREATE TABLE products (
-    id SERIAL PRIMARY  KEY,
-    name VARCHAR(150 ) NOT NULL,
-    price float(53) NOT NULL,
-    merchant_id  bigint REFERENCES users(id) ON DELETE CASCADE
-
-);
 
   
 
 
-CREATE TABLE order_products (
-     id SERIAL PRIMARY KEY,
-     quantity integer,
-      status VARCHAR(15),
-     product_id bigint REFERENCES products(id)ON DELETE CASCADE,
-     customer_id bigint REFERENCES users(id) ON DELETE CASCADE
-  );
