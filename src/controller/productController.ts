@@ -11,7 +11,7 @@ const getProduct = async (
     const products = await store.index();
     res.json({ products });
   } catch (err) {
-    console.log(err.message);
+    res.send(err.message);
   }
 };
 
@@ -20,7 +20,7 @@ const getProductById = async (req: Request, res: Response) => {
     const product = await store.show(req.params.id);
     res.json(product);
   } catch (err) {
-    throw new Error(err.message);
+    res.send(err.message);
   }
 };
 
@@ -41,7 +41,7 @@ const postProduct = async (
     console.log('gg4');
     res.json(newProduct);
   } catch (err) {
-    throw new Error(err.message);
+    res.send(err.message);
   }
 };
 

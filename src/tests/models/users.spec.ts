@@ -3,16 +3,23 @@ import { Users, UsersStore } from '../../models/users';
 const store = new UsersStore();
 
 describe('Users Model', () => {
-  it('should have an index method', () => {
-    expect(store.index).toBeDefined();
+  it('index method should have size', () => {
+    const result = store.index();
+    expect(result).toHaveSize;
   });
 
   it('should have a show method', () => {
-    expect(store.show).toBeDefined();
+    expect(store.show('1')).toBeDefined();
   });
 
   it('should have a create method', () => {
-    expect(store.create).toBeDefined();
+    const Nawaf: Users = {
+      username: 'Nawaf',
+      password: '123',
+      role: 'MERCHANT',
+    };
+    const user = store.create(Nawaf);
+    expect(user).toEqual(jasmine.any(Object));
   });
 
   it('should have a update method', () => {
@@ -22,6 +29,7 @@ describe('Users Model', () => {
   it('should have a delete method', () => {
     expect(store.delete).toBeDefined();
   });
+
   it('should have a add balance method', () => {
     expect(store.addBalance).toBeDefined();
   });

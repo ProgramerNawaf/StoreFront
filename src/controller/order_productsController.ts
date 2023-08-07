@@ -13,7 +13,7 @@ const getOrderByCustomer = async (
 
     return res.status(200).send(order);
   } catch (err) {
-    res.status(404);
+    res.send(err.message);
   }
 };
 
@@ -32,7 +32,7 @@ const createOrder = async (
 
     return res.status(200).send('Order Created!');
   } catch (err) {
-    res.status(404);
+    res.send(err.message);
   }
 };
 
@@ -48,7 +48,7 @@ const checkoutOrder = async (
 
     return res.status(200).send('Order Checked out!' + order);
   } catch (err) {
-    res.status(404).send(err.message);
+    res.send(err.message);
   }
 };
 

@@ -4,11 +4,11 @@ const store = new ProductStore();
 
 describe('Product Model', () => {
   it('should have an index method', () => {
-    expect(store.index).toBeDefined();
+    expect(store.index.length).toBeGreaterThanOrEqual(0);
   });
 
-  it('should have a show method', () => {
-    expect(store.show).toBeDefined();
+  it('should have a show method that returns an object', () => {
+    expect(store.show('1')).toEqual(jasmine.any(Object));
   });
 
   it('should have a create method', () => {

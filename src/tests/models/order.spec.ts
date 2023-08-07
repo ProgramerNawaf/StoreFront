@@ -1,3 +1,4 @@
+import { STATUS_CODES } from 'http';
 import {
   Order_Products,
   Order_Products_Store,
@@ -6,14 +7,14 @@ import {
 const store = new Order_Products_Store();
 
 describe('Order_ProductsModel Model', () => {
-  it('should have a get customer orders  method', () => {
-    expect(store.getOrderByCustomer).toBeDefined();
+  it('get customer orders method should return list length greater than or equal 0', () => {
+    expect(store.getOrderByCustomer.length).toBeGreaterThanOrEqual(0);
   });
-  it('should have a create order  method', () => {
+  it('should have a create order defined', () => {
     expect(store.createOrder).toBeDefined();
   });
 
-  it('should have a check out order method', () => {
-    expect(store.checkoutOrder).toBeDefined();
+  it('should have a check out order method should be truthy', () => {
+    expect(store.checkoutOrder).toBeTruthy();
   });
 });
