@@ -52,3 +52,5 @@
 - quantity 
 - customer_id
 - status of order (DONE or INPROGRESS)
+
+ ![StoreFront drawio](https://github.com/ProgramerNawaf/StoreFront/assets/105772524/f4ab6fe0-2036-46cb-82ed-401ed6cabafe)
