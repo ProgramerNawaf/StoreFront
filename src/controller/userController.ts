@@ -2,6 +2,15 @@ import express, { Request, Response } from 'express';
 import { Users, UsersStore } from '../models/users';
 import jwt from 'jsonwebtoken';
 
+export type UserCreation = {
+  id?: Number;
+  username: string;
+  password: string;
+  role: string;
+  balance: Number;
+  revenue: Number;
+};
+
 const store = new UsersStore();
 
 const getUsers = async (_req: Request, res: Response) => {
@@ -23,15 +32,14 @@ const deleteUser = async (_req: Request, res: Response) => {
 };
 
 const createUser = async (_req: Request, res: Response) => {
-  const user: any = {
+  const user: UserCreation = {
     username: _req.body.username,
     password: _req.body.password,
     role: _req.body.role,
+    balance: 0,
+    revenue: 0,
   };
 
-  if (user.role == 'CUSTOMER') user.balance = 0;
-  else user.revenue = 0;
-  console.log(user);
   try {
     const newUser = await store.create(user);
     var token = jwt.sign({ user: newUser }, process.env.TOKEN_SECRET!);

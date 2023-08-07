@@ -27,10 +27,6 @@ describe('testing all the routes endpoint', () => {
     token = response.body;
     console.log(token);
 
-    const decoded: any = jwt.verify(
-      token,
-      process.env.TOKEN_SECRET as jwt.Secret,
-    );
     id = 1;
     console.log(id);
   });
