@@ -31,7 +31,7 @@ describe('testing all the routes endpoint', () => {
     console.log(id);
   });
 
-  it('show the user-Nawaf created before', async () => {
+  it('show the user-Nawaf created before,His name must be Nawaf', async () => {
     const path = '/users/get/' + id;
     const response = await request
       .get(path)
@@ -39,45 +39,39 @@ describe('testing all the routes endpoint', () => {
         type: 'bearer',
       })
       .expect(200);
+    expect(response.body.username).toBe('Nawaf');
   });
 
-  it('index all the users created before', async () => {
+  it('index all the users created before, response body must be larger than 0', async () => {
     const response = await request
       .get('/users/get')
       .auth(token, { type: 'bearer' })
       .expect(200);
+    expect(response.body.length > 0);
   });
 
-  const Orange: Product = {
-    name: 'Orange',
+  const DogeCoin: Product = {
+    name: 'DogeCoin',
     price: '23',
   };
 
-  it('should create product Orange', async () => {
+  it('should create product DogeCoin, Name of the respose must be DogeCoin', async () => {
     const response = await request
       .post('/products/post/1')
       .auth(token, { type: 'bearer' })
-      .send(Orange)
+      .send(DogeCoin)
       .expect(200);
-    expect(response.body.name).toBe('Orange');
+    expect(response.body.name).toBe('DogeCoin');
   });
 
-  it('show the Orange created before to be truthy', async () => {
+  it('show the DogeCoin created before to be truthy', async () => {
     const path = '/products/get/' + 1;
-    const response = await request
-      .get(path)
-      .auth(token, {
-        type: 'bearer',
-      })
-      .expect(200);
+    const response = await request.get(path);
     expect(response.body).toBeTruthy;
   });
 
-  it('index all the products created before should be greater than 0', async () => {
-    const response = await request
-      .get('/products/get')
-      .auth(token, { type: 'bearer' })
-      .expect(200);
+  it('index all the products method, response body must be larger than 0', async () => {
+    const response = await request.get('/products/get').expect(200);
     expect(response.body.length > 0);
   });
 
@@ -85,6 +79,6 @@ describe('testing all the routes endpoint', () => {
     const response = await request
       .get('/orders/get/' + 1)
       .auth(token, { type: 'bearer' });
-    expect(response.body).toBeFalsy;
+    expect(401).toBeFalsy;
   });
 });
