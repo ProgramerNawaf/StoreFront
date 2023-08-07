@@ -9,8 +9,8 @@ describe('Users Model', () => {
     expect(result).toHaveSize;
   });
 
-  it('should have a show method', () => {
-    expect(store.show('1')).toBeDefined();
+ it('show method should return truthy value', () => {
+    expect(store.show('1')).toBeTruthy();
   });
 
   it('should have a create method', () => {
