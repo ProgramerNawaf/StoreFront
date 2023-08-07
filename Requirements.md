@@ -25,11 +25,11 @@
 - Index [token required] GET(/users/getMerchants)
 - Show [token required] GET(/users/getMerchant/:id)
 
-#### Orders_products
+#### Orders
 
-- getOrderByCustomer (args: customer id)[token required] GET(/orders/get/:customer_id)
-- createOrder (args: customer id , product id)[token required] POST(/orders/createOrder/:customer_id/:product_id)
-- checkoutOrder (args: customer id , order id)[token required] POST(/orders/checkoutOrder/:customer_id/:order_id)
+- getOrderByCustomer (args: customer id)[token required] GET(/orders/getCustomerOrders/:customer_id)
+- createOrder (args: customer id )[token required] POST(/orders/createOrder/:customer_id)
+
 
 ## Data Shapes
 
@@ -66,4 +66,5 @@
 - customer_id
 - status of order (DONE or INPROGRESS)
 
-![StoreFront drawio](https://github.com/ProgramerNawaf/StoreFront/assets/105772524/f4ab6fe0-2036-46cb-82ed-401ed6cabafe)
+![image](https://github.com/ProgramerNawaf/StoreFront/assets/105772524/05a516cf-9cfa-4aaf-8956-59a9fc7e9440)
+
