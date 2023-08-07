@@ -39,12 +39,12 @@ Now that you can create a database and a user, you should create one database (w
 # .env file (from dotenv) accordingly:
 
 
-- DB_HOST = "<127.0.0.1>"
-- DB_NAME = "<what ever database name you created>"
-- DB_USER = "<postgres>"
+- POSTGRES_HOST = "<127.0.0.1>"
+- POSTGRES_DB = "<what ever database name you created>"
+- POSTGRES_USER = "<postgres>"
 - DB_PORT = "<5432>"
-- DB_PASSWORD = "<your password>"
-- TEST_DB_NAME = "<make another db for testing>" (for tests)
+- POSTGRES_PASSWORD = "<your password>"
+- POSTGRES_TEST_DB = "<make another db for testing>" (for tests)
 - ENV = "dev" (run with dev db or test db)
 - BCRYPT_PW = "<write some string to pepper your encryption>"
 - SALT_ROUNDS = "<write an integer to say how many times the pw should be hashed>"
