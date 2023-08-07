@@ -1,3 +1,4 @@
+import { UserCreation } from '../../controller/userController';
 import { Users, UsersStore } from '../../models/users';
 
 const store = new UsersStore();
@@ -13,10 +14,12 @@ describe('Users Model', () => {
   });
 
   it('should have a create method', () => {
-    const Nawaf: Users = {
+    const Nawaf: UserCreation = {
       username: 'Nawaf',
       password: '123',
       role: 'MERCHANT',
+      balance: 0,
+      revenue: 0,
     };
     const user = store.create(Nawaf);
     expect(user).toEqual(jasmine.any(Object));

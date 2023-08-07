@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt';
 import client from '../database';
+import { UserCreation } from '../controller/userController';
 
 const pepper: string = process.env.BCRYPT_PW as string;
 const saltRounds: number = parseInt(process.env.SALT_ROUNDS as string);
@@ -39,7 +40,7 @@ export class UsersStore {
     }
   }
 
-  async create(u: Users): Promise<Users> {
+  async create(u: UserCreation): Promise<Users> {
     try {
       console.log('gg2');
       const hash = bcrypt.hashSync(u.password + pepper, saltRounds);
